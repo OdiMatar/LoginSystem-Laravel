@@ -2,47 +2,6 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AppointmentController;
-
-Route::middleware(['auth'])->group(function () {
-
-    Route::get('/appointments', [AppointmentController::class, 'index'])
-        ->name('appointments.index');
-
-    Route::get('/mijn-afspraken', [AppointmentController::class, 'myAppointments'])
-        ->name('appointments.my');
-
-    // Management: afspraken beheren (alleen praktijkmanagement/admin)
-    Route::get('/management/appointments', [AppointmentController::class, 'manage'])
-        ->name('appointments.manage');
-
-    Route::delete('/management/appointments/{appointment}', [AppointmentController::class, 'destroy'])
-        ->name('appointments.destroy');
-});
-
-Route::get('/mijn-afspraken', [AppointmentController::class, 'myAppointments'])
-    ->name('appointments.my');
-
-
-
-// Alleen Praktijkmanagement / admin
-// Alleen Praktijkmanagement / admin mag dit
-Route::get('/management-dashboard', function () {
-        // Zorg dat user ingelogd is
-        if (!auth()->check()) {
-            return redirect()->route('login');
-        }
-
-        // Check rolnaam (admin / praktijkmanagement)
-        if (auth()->user()->rolename !== 'admin') {
-            abort(403, 'Geen toegang — Alleen praktijkmanagement mag dit zien.');
-        }
-
-        return 'Welkom Praktijkmanager!';
-    })->name('management.dashboard');
-
-
-
 
 Route::get('/', function () {
     return view('welcome');
@@ -66,9 +25,7 @@ Route::get('/tandarts', [App\Http\Controllers\TandartsController::class, 'index'
 
 Route::get('/patient', [App\Http\Controllers\PatientController::class, 'index'])
     ->name('patient.index')
-    ->middleware(['auth', 'role:patient,praktijkmanagement']);
-
-    
+    ->middleware(['auth', 'role:patient']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -80,4 +37,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
