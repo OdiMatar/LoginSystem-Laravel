@@ -3,9 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class PraktijkmanagementController extends Controller
 {
+  private $userModel;
+    public function __construct()
+    {
+        $this->userModel = new User();
+    }
+
     /**
      * Display a listing of the resource.
      */
