@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Container\Attributes\Auth;
 
 class PraktijkmanagementController extends Controller
 {
@@ -70,5 +71,15 @@ class PraktijkmanagementController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function manageUserroles()
+    {
+        $users = $this->userModel->sp_GetAllUsers(auth()->user()->id);
+
+        return view('Praktijkmanagement.manageUsers', [
+            'title' => 'Gebruikersrollen',
+            'users' => $users,
+        ]);
     }
 }
