@@ -7,6 +7,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Praktijkmanagement Routes
+
+Route::get('/praktijkmanagement', [App\Http\Controllers\PraktijkmanagementController::class, 'index'])
+    ->name('praktijkmanagement.index')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/praktijkmanagement/userroles', [App\Http\Controllers\PraktijkmanagementController::class, 'manageUserroles'])
+    ->name('praktijkmanagement.userroles')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/praktijkmanagement/{id}/edit', [App\Http\Controllers\PraktijkmanagementController::class, 'edit'])
+    ->name('praktijkmanagement.edit')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::delete('/praktijkmanagement/{id}', [App\Http\Controllers\PraktijkmanagementController::class, 'destroy'])
+    ->name('praktijkmanagement.destroy')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/praktijkmanagement/{id}', [App\Http\Controllers\PraktijkmanagementController::class, 'show'])
+    ->name('praktijkmanagement.show')
+    ->middleware(['auth', 'role:praktijkmanagement']);
+
+Route::get('/tandarts', [App\Http\Controllers\TandartsController::class, 'index'])
+    ->name('tandarts.index')
+    ->middleware(['auth', 'role:tandarts']);
+
+
 Route::get('/mondhygienist', [App\Http\Controllers\MondhygienistController::class, 'index'])
     ->name('mondhygienist.index')
     ->middleware(['auth', 'role:mondhygienist']);
