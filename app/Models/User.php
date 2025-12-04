@@ -48,9 +48,9 @@ class User extends Authenticatable
         ];
     }
 
-    public function sp_GetAllUsers($currentUserId)
+    public function sp_GetAllUsers($user_Id)
     {
-        $result DB::select('CALL sp_GetAllUsers(:id)', ['id' => $user_Id]);
+        $result = DB::select('CALL sp_GetAllUsers(:id)', ['id' => $user_Id]);
         
         return $result;
     }
